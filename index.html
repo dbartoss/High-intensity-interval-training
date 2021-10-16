@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* https://stackoverflow.com/a/10319619/16431585 */
+        #remaining-container h3,
+        #remaining-container p {
+            display: inline;
+            vertical-align: top;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 16px;
+            line-height: 28px;
+}
+    </style>
+</head>
+<body>
+    
+ <div id="remaining-container">
+    <h3>Remaining: </h3>
+    <p></p> 
+ </div>
+ 
+ 
+    
+</body>
+
+<script>
+    let remainingInSeconds = calculateRemainingInSeconds();
+    let remainingInMinutes = formatSecondsToTime(remainingInSeconds);
+    updateRemainingElement(formatSecondsToTime(remainingInSeconds)); 
+
+    function updateRemainingElement(value) {
+        // https://stackoverflow.com/a/10319619/16431585
+        let remainingContainer = document.querySelector('#remaining-container p');
+        remainingContainer.textContent = value;
+    }
+
+    function formatSecondsToTime(e) {
+        // https://stackoverflow.com/a/61335543/16431585
+        var h = Math.floor(e / 3600).toString().padStart(2,'0'),
+        m = Math.floor(e % 3600 / 60).toString().padStart(2,'0'),
+        s = Math.floor(e % 60).toString().padStart(2,'0');
+
+        if (h !== '00') {
+            return `${h}:${m}:${s}`;
+        }
+        else if (m !== '00')
+        {
+            return `${m}:${s}`;   
+        }
+        else 
+        {
+            return `${s}`;
+        }
+    }
+
+    function calculateRemainingInSeconds() {
+        let seats = 6;
+        let highDurationInSeconds = 30;
+        let lowDurationInSeconds = 60;
+
+        return seats * (highDurationInSeconds + lowDurationInSeconds);
+    }
+</script>
+</html>
