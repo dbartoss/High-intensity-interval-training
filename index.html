@@ -7,8 +7,8 @@
     <title>Document</title>
     <style>
         /* https://stackoverflow.com/a/10319619/16431585 */
-        #remaining-container h3,
-        #remaining-container p {
+        .fieldValue h3,
+        .fieldValue p {
             display: inline;
             vertical-align: top;
             font-family: 'Open Sans', sans-serif;
@@ -19,19 +19,35 @@
 </head>
 <body>
     
- <div id="remaining-container">
-    <h3>Remaining: </h3>
-    <p></p> 
- </div>
+    <div class="fieldValue" id="sets-container">
+        <h3>Sets: </h3>
+        <p></p>  
+    </div>
+ 
+    <div class="fieldValue" id="remaining-container">
+        <h3>Remaining: </h3>
+        <p></p> 
+    </div>
  
  
     
 </body>
 
 <script>
-    let remainingInSeconds = calculateRemainingInSeconds();
+    let sets = 6;
+    updateSetsElement(formatCurrentSet(1, sets));
+
+    let remainingInSeconds = calculateRemainingInSeconds(sets);
     let remainingInMinutes = formatSecondsToTime(remainingInSeconds);
-    updateRemainingElement(formatSecondsToTime(remainingInSeconds)); 
+    updateRemainingElement(formatSecondsToTime(remainingInSeconds));
+    
+    
+    function formatCurrentSet(currentSet, sets) { return `${currentSet} / ${sets}`; }
+
+    function updateSetsElement(value) {
+        let setsContainer = document.querySelector('#sets-container p');
+        setsContainer.textContent = value; 
+    }
 
     function updateRemainingElement(value) {
         // https://stackoverflow.com/a/10319619/16431585
@@ -58,12 +74,11 @@
         }
     }
 
-    function calculateRemainingInSeconds() {
-        let seats = 6;
+    function calculateRemainingInSeconds(sets) {
         let highDurationInSeconds = 30;
         let lowDurationInSeconds = 60;
 
-        return seats * (highDurationInSeconds + lowDurationInSeconds);
+        return sets * (highDurationInSeconds + lowDurationInSeconds);
     }
 </script>
 </html>
