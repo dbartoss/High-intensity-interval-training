@@ -28,12 +28,18 @@
         <h3>Remaining: </h3>
         <p></p> 
     </div>
- 
- 
+
+    <div class="fieldValue" id="elapsed-container">
+        <h3>Elapsed: </h3>
+        <p></p> 
+    </div>
+    
+    <button id='start'>Start</button>
     
 </body>
 
 <script>
+    updateElapsedElement(formatSecondsToTime(0));
     let sets = 6;
     updateSetsElement(formatCurrentSet(1, sets));
 
@@ -41,7 +47,10 @@
     let remainingInMinutes = formatSecondsToTime(remainingInSeconds);
     updateRemainingElement(formatSecondsToTime(remainingInSeconds));
     
-    
+    function updateElapsedElement(value) {
+        let setsContainer = document.querySelector('#elapsed-container p');
+        setsContainer.textContent = value; 
+    }
     function formatCurrentSet(currentSet, sets) { return `${currentSet} / ${sets}`; }
 
     function updateSetsElement(value) {
@@ -64,13 +73,9 @@
         if (h !== '00') {
             return `${h}:${m}:${s}`;
         }
-        else if (m !== '00')
+        else
         {
             return `${m}:${s}`;   
-        }
-        else 
-        {
-            return `${s}`;
         }
     }
 
