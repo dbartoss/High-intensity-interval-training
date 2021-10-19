@@ -39,6 +39,13 @@
 </body>
 
 <script>
+
+    let sets = 6;
+    updateSetsElement(formatCurrentSet(1, sets));
+
+    let remainingInSeconds = calculateRemainingInSeconds(sets);
+    updateRemainingElement(formatSecondsToTime(remainingInSeconds));
+    
     let elapsedInSeconds = 0;
     updateElapsedElement(formatSecondsToTime(0))
 
@@ -46,7 +53,10 @@
     let startElement = document.querySelector('#start');
     startElement.onclick = function(e) {
         if(!intervalId) {
-            intervalId = setInterval(() => { updateElapsedElement(formatSecondsToTime(elapsedInSeconds++));}, 1000);
+            intervalId = setInterval(() => { 
+                updateElapsedElement(formatSecondsToTime(elapsedInSeconds++));
+                updateRemainingElement(formatSecondsToTime(remainingInSeconds--));
+            }, 1000);
         }
     };
 
@@ -56,17 +66,14 @@
             clearInterval(intervalId);
             elapsedInSeconds = 0;
             updateElapsedElement(formatSecondsToTime(elapsedInSeconds));
+            remainingInSeconds = calculateRemainingInSeconds(sets);
+            updateRemainingElement(formatSecondsToTime(remainingInSeconds));
             intervalId = null;
         }
     };
 
     
-    let sets = 6;
-    updateSetsElement(formatCurrentSet(1, sets));
 
-    let remainingInSeconds = calculateRemainingInSeconds(sets);
-    let remainingInMinutes = formatSecondsToTime(remainingInSeconds);
-    updateRemainingElement(formatSecondsToTime(remainingInSeconds));
     
     function updateElapsedElement(value) {
         let setsContainer = document.querySelector('#elapsed-container p');
