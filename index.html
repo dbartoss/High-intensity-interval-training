@@ -35,11 +35,32 @@
     </div>
     
     <button id='start'>Start</button>
-    
+    <button id='stop'>Stop</button>
 </body>
 
 <script>
-    updateElapsedElement(formatSecondsToTime(0));
+    let elapsedInSeconds = 0;
+    updateElapsedElement(formatSecondsToTime(0))
+
+    var intervalId = null;
+    let startElement = document.querySelector('#start');
+    startElement.onclick = function(e) {
+        if(!intervalId) {
+            intervalId = setInterval(() => { updateElapsedElement(formatSecondsToTime(elapsedInSeconds++));}, 1000);
+        }
+    };
+
+    let stopElement = document.querySelector('#stop');
+    stopElement.onclick = function(e) {
+        if(intervalId) {
+            clearInterval(intervalId);
+            elapsedInSeconds = 0;
+            updateElapsedElement(formatSecondsToTime(elapsedInSeconds));
+            intervalId = null;
+        }
+    };
+
+    
     let sets = 6;
     updateSetsElement(formatCurrentSet(1, sets));
 
